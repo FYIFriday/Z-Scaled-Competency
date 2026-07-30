@@ -622,7 +622,7 @@
 
   function showResult() {
     const average = scores.reduce((sum, v) => sum + v, 0) / scores.length;
-    const isWinner = average > WIN_THRESHOLD;
+    const isWinner = average >= WIN_THRESHOLD;
     const displayAverage = average.toFixed(2).replace(/^(-?)(\d)/, (m, sign, d) => (average > 0 ? '+' : '') + m);
 
     overlayMessage.textContent = isWinner ? "Winner!" : "Try again!";
