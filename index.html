@@ -394,6 +394,20 @@
     margin: -0.8rem 0 1.4rem;
   }
 
+  .overlay-note {
+    font-size: 0.9rem;
+    font-style: italic;
+    font-weight: 600;
+    color: var(--deep-red);
+    opacity: 0.85;
+    margin: -0.9rem 0 1.4rem;
+    display: none;
+  }
+
+  .overlay-note.show {
+    display: block;
+  }
+
   @keyframes message-bounce {
     0% { transform: scale(0.4); opacity: 0; }
     60% { transform: scale(1.2); opacity: 1; }
@@ -468,6 +482,7 @@
     <div class="overlay-card">
       <p id="overlayMessage"></p>
       <p id="overlayAverage"></p>
+      <p id="overlayNote" class="overlay-note"></p>
       <button id="playAgainBtn">Play Again</button>
     </div>
   </div>
@@ -491,6 +506,7 @@
   const overlay = document.getElementById('overlay');
   const overlayMessage = document.getElementById('overlayMessage');
   const overlayAverage = document.getElementById('overlayAverage');
+  const overlayNote = document.getElementById('overlayNote');
   const playAgainBtn = document.getElementById('playAgainBtn');
   const lights = document.getElementById('lights');
 
@@ -628,6 +644,11 @@
     overlayMessage.textContent = isWinner ? "Winner!" : "Try again!";
     overlayMessage.classList.toggle('win-message', isWinner);
     overlayAverage.textContent = `Average score: ${displayAverage}`;
+
+    const hadMiss = isWinner && scores.includes(-1);
+    overlayNote.textContent = hadMiss ? "This would not have been marked a win using the previous method." : "";
+    overlayNote.classList.toggle('show', hadMiss);
+
     overlay.classList.add('visible');
 
     if (isWinner) {
